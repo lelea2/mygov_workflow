@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MyGov_Workflow</string>
+    <string name="app_name">LinkedGov</string>
+    <string name="title_activity_main">Home</string>
+    <string name="title_activity_splash">Splash Page</string>
 </resources>

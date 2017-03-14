@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_home"
+        icon="@drawable/home_light"
+        title="" />
+    <tab
+        id="@+id/tab_claim"
+        icon="@drawable/claim_light"
+        title="" />
+    <tab
+        id="@+id/tab_tracking"
+        icon="@drawable/tracking_light"
+        title="" />
+    <tab
+        id="@+id/tab_message"
+        icon="@drawable/message_light"
+        title="" />
+</tabs>
