@@ -27,7 +27,11 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".ClaimActivity" />
         <activity android:name=".MessageActivity" />
-        <activity android:name=".TrackingActivity"></activity>
+        <activity android:name=".TrackingActivity" />
+        <activity
+            android:name=".MessageViewActivity"
+            android:label="@string/title_activity_message_view"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
