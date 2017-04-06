@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_message_reply"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.kdao.mygov_workflow.MessageViewActivity">
-
+    tools:context="com.kdao.mygov_workflow.MessageReplyActivity">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -20,33 +18,42 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_height="500dp">
+            android:layout_height="450dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <EditText
+                <TextView
+                    android:text="Title"
                     android:layout_width="match_parent"
-                    android:layout_height="458dp"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/editText3"
-                    android:background="@drawable/bg_edittext_focused"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title"
+                    android:textStyle="normal|bold"
+                    android:textAlignment="viewStart"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:text="Located on 154 acres in downtown San Jose, the university offers the excitement of studying at a large, metropolitan campus where many cultures meet.  sjsu campus Yet students find personal attention from faculty members in the smaller settings of the university's eight colleges.  San Jose is a newly revitalized city which hosts major sports, the arts, museums and restaurants serving a wide variety of cuisines. The Santa Cruz coastline is less than an hour away and San Francisco is one hour to the north."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3" />
+
             </LinearLayout>
         </ScrollView>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
 
             <Button
-                android:text="Send"
+                android:text="Quick Reply"
                 android:layout_width="140dp"
                 android:layout_height="30dp"
-                android:id="@+id/send"
+                android:id="@+id/quickReplay"
                 android:layout_weight="1"
                 android:textSize="16sp"
                 android:background="#0199E1"
@@ -67,5 +74,4 @@
                 android:layout_marginRight="20dp" />
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
