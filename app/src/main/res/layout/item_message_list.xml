@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_weight="match_parent"
+    android:background="#0C9C8E"
+    android:layout_height="85dp">
+
+    <TextView
+        android:text="Title (Unread)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textStyle="normal|bold"
+        android:textSize="20sp" />
+
+    <TextView
+        android:text="status:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/status"
+        android:textSize="18sp" />
+
+    <TextView
+        android:text="Agent:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/agent" />
+
+    <TextView
+        android:text="Department:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/department" />
+</LinearLayout>
