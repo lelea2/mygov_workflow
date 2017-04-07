@@ -10,4 +10,18 @@
     tools:context="com.kdao.mygov_workflow.TrackingActivity"
     android:background="#E1E6E9">
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true">
+        <ListView
+            android:id="@+id/trackingList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10.0sp"
+            android:background="#2196F3"/> 
+    </ScrollView>
 </RelativeLayout>
