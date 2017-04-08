@@ -10,4 +10,136 @@
     tools:context="com.kdao.mygov_workflow.ClaimActivity"
     android:background="#E1E6E9">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ClaimType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:inputType="textPersonName"
+            android:text="Claim Type" />
+
+        <Spinner
+            android:id="@+id/ClaimTypeList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ClaimType"
+            android:layout_below="@+id/ClaimType"
+            android:entries="@array/claimTypes"
+            android:paddingLeft="16dp"
+            android:prompt="@string/claimType_prompt"
+            android:background="#11FFFF"/>
+
+        <TextView
+            android:id="@+id/Subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="Subject" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:ems="10"
+            android:id="@+id/subject_text"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:layout_below="@+id/Subject"
+            android:background="#11FFFF"
+            android:layout_alignStart="@+id/Subject" />
+
+        <TextView
+            android:id="@+id/Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="Description" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:ems="10"
+            android:id="@+id/Description_text"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:layout_below="@+id/Description"
+            android:background="#11FFFF"
+            android:layout_alignStart="@+id/Description" />
+
+        <TextView
+            android:id="@+id/SpaceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="" />
+
+        <Button
+            android:id="@+id/Images"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:paddingLeft="16dp"
+            android:text="Attach an image"
+            android:background="#DDFFDD"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="196dp"
+                android:layout_height="41dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="false"
+                android:id="@+id/image1" />
+            <ImageView
+                android:layout_width="196dp"
+                android:layout_height="41dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="false"
+                android:id="@+id/image2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="196dp"
+                android:layout_height="41dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="false"
+                android:id="@+id/image3" />
+            <ImageView
+                android:layout_width="196dp"
+                android:layout_height="41dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="false"
+                android:id="@+id/image4" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
