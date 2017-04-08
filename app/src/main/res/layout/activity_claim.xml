@@ -94,14 +94,35 @@
             android:paddingTop="16dp"
             android:text="" />
 
-        <Button
-            android:id="@+id/Images"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:paddingLeft="16dp"
-            android:text="Attach an image"
-            android:background="#DDFFDD"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="0.5"
+                android:background="#DDFFDD"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:text="Attach images" />
+
+            <Button
+                android:id="@+id/Submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="0.5"
+                android:background="@android:color/holo_red_dark"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:text="Submit claim" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
