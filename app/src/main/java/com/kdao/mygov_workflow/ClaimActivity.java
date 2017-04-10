@@ -87,19 +87,46 @@ public class ClaimActivity extends AppCompatActivity {
         btnResetClaim.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                refresh();
+                new AlertDialog.Builder(ClaimActivity.this)
+                        .setTitle("Clear everything?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                refresh();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
 
         btnRemoveLastImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CURRENT_INDEX > 0) {
-                    Drawable emptyImage = getResources().getDrawable(android.R.drawable.ic_menu_camera);
-                    viewImage[--CURRENT_INDEX].setImageDrawable(emptyImage);
-                    imageAddress[CURRENT_INDEX] = "";
-                    imageExist[CURRENT_INDEX] = false;
-                }
+                new AlertDialog.Builder(ClaimActivity.this)
+                        .setTitle("Remove last image?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (CURRENT_INDEX > 0) {
+                                    Drawable emptyImage = getResources().getDrawable(android.R.drawable.ic_menu_camera);
+                                    viewImage[--CURRENT_INDEX].setImageDrawable(emptyImage);
+                                    imageAddress[CURRENT_INDEX] = "";
+                                    imageExist[CURRENT_INDEX] = false;
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
             }
         });
 
