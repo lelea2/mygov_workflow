@@ -173,12 +173,10 @@ public class TrackingActivity extends AppCompatActivity {
             }
 
             Case trackingCase = caseList.get(position);
-            //TextView caseIDText = (TextView) itemView.findViewById(R.id.case_id);
-            //caseIDText.setText(trackingCase.getCaseID());
             TextView caseNameText = (TextView) itemView.findViewById(R.id.case_name);
             caseNameText.setText(trackingCase.getCaseName());
             TextView caseStatusText = (TextView) itemView.findViewById(R.id.case_status);
-            caseStatusText.setText(trackingCase.getStatus());
+            caseStatusText.setText("Status: " + trackingCase.getStatus());
             TextView descriptionText = (TextView) itemView.findViewById(R.id.comment_content);
             descriptionText.setText(trackingCase.getComment());
             return itemView;

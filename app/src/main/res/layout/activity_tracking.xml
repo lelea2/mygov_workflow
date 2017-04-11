@@ -10,11 +10,16 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <ListView
             android:id="@+id/trackingList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" /> 
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="30dp"/> 
     </ScrollView>
 
     <!-- Include bottom bar -->

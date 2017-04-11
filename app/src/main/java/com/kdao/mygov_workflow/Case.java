@@ -10,13 +10,6 @@ public class Case {
     private String status;
     private String comment;
 
-    public Case(String caseID, String caseName, String status, String comment){
-        this.caseID = caseID;
-        this.caseName = caseName;
-        this.status = status;
-        this.comment = comment;
-    }
-
     public Case(String caseName, String status, String comment){
         this.caseName = caseName;
         this.status = status;

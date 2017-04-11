@@ -4,26 +4,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="30dp"
     android:background="#2196F3">   
 
     <TextView
-        android:id="@+id/case_id"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:text="ID: 123456"
-        android:textAlignment="viewStart"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
-        android:textStyle="bold" /> 
-
-    <TextView
         android:id="@+id/case_name"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:text="Claim1"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -31,22 +19,25 @@
 
     <TextView
         android:id="@+id/case_status"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:text="status"
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />  
 
     <TextView
         android:id="@+id/comment"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:text="Comment:"
         android:textAlignment="viewStart"
         android:textColor="@android:color/background_light"
-        android:textSize="24sp" /> 
+        android:textSize="24sp"
+        android:textStyle="bold" /> 
     <TextView
         android:id="@+id/comment_content"
         android:layout_width="match_parent"
