@@ -35,6 +35,7 @@ import org.json.simple.parser.ParseException;
 public class TrackingActivity extends AppCompatActivity {
 
     private static String GET_TRACKING_URL = "http://ec2-54-201-62-129.us-west-2.compute.amazonaws.com/api/workflows";
+    private static String[] STATE_TYPE = {"Open","In-Progress","Resolved","Archived","Aborted","Re-open"};
     private ProgressDialog progressDialog;
     private List<Case> caseList = new ArrayList<>();
     private ListView cases;
@@ -156,7 +157,6 @@ public class TrackingActivity extends AppCompatActivity {
                     caseList.add(trackingCase);
                 }
             }
-            System.out.println(caseList.size());
         }
     }
 
@@ -176,7 +176,7 @@ public class TrackingActivity extends AppCompatActivity {
             TextView caseNameText = (TextView) itemView.findViewById(R.id.case_name);
             caseNameText.setText(trackingCase.getCaseName());
             TextView caseStatusText = (TextView) itemView.findViewById(R.id.case_status);
-            caseStatusText.setText("Status: " + trackingCase.getStatus());
+            caseStatusText.setText("Status: " + STATE_TYPE[Integer.parseInt(trackingCase.getStatus())-1]);
             TextView descriptionText = (TextView) itemView.findViewById(R.id.comment_content);
             descriptionText.setText(trackingCase.getComment());
             return itemView;
