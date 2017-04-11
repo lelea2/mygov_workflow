@@ -3,57 +3,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">   
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">  
-        <TextView
-            android:id="@+id/case_name"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Claim1"
-            android:textSize="24sp"
-            android:textStyle="bold" />  
-        <TextView
-            android:id="@+id/case_id"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:text="ID: 123456"
-            android:textAlignment="textEnd"
-            android:textSize="24sp"
-            android:textStyle="bold" /> 
-    </LinearLayout>  
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"> 
-        <TextView
-            android:id="@+id/case_status"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="status"
-            android:textSize="24sp" />  
-        <TextView
-            android:id="@+id/agent_name"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:text="agent name"
-            android:textAlignment="textEnd"
-            android:textSize="24sp"/> 
-    </LinearLayout>  
+    android:layout_height="match_parent"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="30dp"
+    android:background="#2196F3">   
+
     <TextView
-        android:id="@+id/dpt_name"
-        android:layout_width="match_parent"
+        android:id="@+id/case_id"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:text="department name"
+        android:text="ID: 123456"
         android:textAlignment="viewStart"
-        android:textSize="24sp" /> 
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        android:textStyle="bold" /> 
+
+    <TextView
+        android:id="@+id/case_name"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:text="Claim1"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        android:textStyle="bold" />  
+
+    <TextView
+        android:id="@+id/case_status"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:text="status"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />  
+
     <TextView
         android:id="@+id/comment"
         android:layout_width="170dp"
@@ -61,7 +45,8 @@
         android:layout_marginLeft="30dp"
         android:text="Comment:"
         android:textAlignment="viewStart"
-        android:textSize="24sp"/> 
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" /> 
     <TextView
         android:id="@+id/comment_content"
         android:layout_width="match_parent"
