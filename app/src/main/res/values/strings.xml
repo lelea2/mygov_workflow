@@ -3,12 +3,4 @@
     <string name="title_activity_main">Home</string>
     <string name="title_activity_splash">Splash Page</string>
     <string name="title_activity_message_view">MessageViewActivity</string>
-    <string name="claimType_prompt">Choose a country</string>
-
-    <string-array name="claimTypes">
-        <item>DMV issue</item>
-        <item>Illegal dumping</item>
-        <item>Visa issue</item>
-        <item>Medicare</item>
-    </string-array>
 </resources>

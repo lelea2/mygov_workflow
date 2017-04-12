@@ -13,4 +13,6 @@ public class Constants {
     public static final String BUCKET_NAME = "cmpe295";
 
     public static final String BUCKET_REGION = "us-west-2";
+
+    public static final String URL_API = "http://ec2-54-201-62-129.us-west-2.compute.amazonaws.com/api/";
 }

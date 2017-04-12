@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/ClaimType"
+            android:id="@+id/WorkflowType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -27,15 +27,13 @@
             android:text="Claim Type" />
 
         <Spinner
-            android:id="@+id/ClaimTypeList"
+            android:id="@+id/WorkflowTypeList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/ClaimType"
-            android:layout_below="@+id/ClaimType"
-            android:entries="@array/claimTypes"
-            android:paddingLeft="16dp"
-            android:prompt="@string/claimType_prompt"
-            android:background="#11FFFF"/>
+            android:layout_alignStart="@+id/WorkflowType"
+            android:layout_below="@+id/WorkflowType"
+            android:background="#11FFFF"
+            android:paddingLeft="16dp" />
 
         <TextView
             android:id="@+id/Subject"

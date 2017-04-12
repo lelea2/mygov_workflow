@@ -8,35 +8,53 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
-
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.TextView;
 
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
-
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ClaimActivity extends AppCompatActivity {
     static CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+    static String workflowTypeDefault = "Please select";
+
     static int TAKE_PHOTO = 1;
     static int CHOOSE_PHOTO = 2;
     static int CURRENT_INDEX = 0;
@@ -48,8 +66,10 @@ public class ClaimActivity extends AppCompatActivity {
     Button btnRemoveLastImage;
     Button btnResetClaim;
 
+    Spinner workflowType;
     EditText subjectText;
     EditText descriptionText;
+    String[] workflowTypeList;
     String[] imageAddress;
     boolean[] imageExist;
     ImageView[] viewImage;
@@ -72,12 +92,16 @@ public class ClaimActivity extends AppCompatActivity {
         btnSubmitClaim = (Button)findViewById(R.id.btnSubmitClaim);
         btnAttachImage = (Button)findViewById(R.id.btnAttachImages);
         btnRemoveLastImage = (Button)findViewById(R.id.btnRemovePreviousImage);
-
+        workflowType = (Spinner)findViewById(R.id.WorkflowTypeList);
         subjectText = (EditText)findViewById(R.id.Subject_text);
         descriptionText = (EditText)findViewById(R.id.Description_text);
 
         imageAddress = new String[NumOfImages];
         imageExist = new boolean[NumOfImages];
+
+        // Initialize claim type list for calling GET API
+
+
 
         // TODO: Modify if NumOfImages != 4
         viewImage = new ImageView[NumOfImages];
@@ -161,7 +185,34 @@ public class ClaimActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    // TODO: Upload subject, claimType and Description
+                    // TODO: POST subject, claimType and Description
+                    if (workflowType.getSelectedItemId() == 0) {
+                        Toast.makeText(ClaimActivity.this,
+                                "Please select the one which best describes your claim!",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (subjectText.getText().length() == 0) {
+                        Toast.makeText(ClaimActivity.this,
+                                "Please enter the subject!",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (descriptionText.getText().length() == 0) {
+                        Toast.makeText(ClaimActivity.this,
+                                "Please enter the description!",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    String workflowTypeSelect = workflowType.getSelectedItem().toString();
+                    String subject = subjectText.getText().toString();
+                    String description = descriptionText.getText().toString();
+
+                    Toast.makeText(ClaimActivity.this,
+                            workflowTypeSelect + "/" + subject + "/" + description,
+                                Toast.LENGTH_LONG).show();
+
 
                     for (int i = 0; i < NumOfImages; i++) {
                         if (imageExist[i]) {
@@ -171,6 +222,8 @@ public class ClaimActivity extends AppCompatActivity {
                             observer.setTransferListener(new UploadListener());
                         }
                     }
+
+                    refresh();
                 } catch (Exception e) {
                     Toast.makeText(ClaimActivity.this,
                             "Unable to get the file from the given URI.  See error log for details",
@@ -180,11 +233,14 @@ public class ClaimActivity extends AppCompatActivity {
         });
 
         refresh();
+
     }
 
     private void refresh(){
         subjectText.setText("");
         descriptionText.setText("");
+        getAllWorkflowConfigures();
+        workflowType.setSelection(0);
         resetImages();
     }
 
@@ -198,6 +254,82 @@ public class ClaimActivity extends AppCompatActivity {
         CURRENT_INDEX = 0;
         NumOfSubmittedImages = 0;
     }
+
+    private void getAllWorkflowConfigures() {
+        class CaseAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                URL url = null;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(new String(Constants.URL_API+"workflow_configure"));
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    InputStreamReader streamReader = new InputStreamReader(in);
+                    BufferedReader bufferedReader = new BufferedReader(streamReader);
+                    StringBuilder sb = new StringBuilder();
+                    String tmp = null;
+                    while ((tmp = bufferedReader.readLine()) != null) {
+                        sb.append(tmp + "\n");
+                    }
+                    return sb.toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    urlConnection.disconnect();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try {
+                    JSONParser jsonParser = new JSONParser();
+                    JSONArray jsonArray = (JSONArray) jsonParser.parse(result);
+                    if (jsonArray.size() == 0) {
+                        Toast.makeText(getApplicationContext(), "No workflow types available", Toast.LENGTH_LONG).show();
+                    } else {
+                        workflowTypeList = new String[jsonArray.size()+1];
+                        workflowTypeList[0] = workflowTypeDefault;
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            JSONObject object = (JSONObject) jsonArray.get(i);
+                            if(object != null) {
+                                workflowTypeList[i+1] = object.get("name").toString();
+                            }
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,workflowTypeList);
+                        workflowType.setAdapter(adapter);
+                        OnItemSelectedListener OnCatSpinnerCL = new AdapterView.OnItemSelectedListener() {
+                            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                                ((TextView) parent.getChildAt(0)).setTextColor(0xFF000000);
+
+                            }
+
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        };
+                        workflowType.setOnItemSelectedListener(OnCatSpinnerCL);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        CaseAsyncTask caseAsyncTask = new CaseAsyncTask();
+        caseAsyncTask.execute();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

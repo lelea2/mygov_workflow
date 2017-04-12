@@ -1,20 +1,25 @@
 package com.kdao.mygov_workflow;
 
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.content.Intent;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -27,14 +32,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 public class TrackingActivity extends AppCompatActivity {
 
-    private static String GET_TRACKING_URL = "http://ec2-54-201-62-129.us-west-2.compute.amazonaws.com/api/workflows";
+    private static String GET_TRACKING_URL = Constants.URL_API+"workflows";
     private static String[] STATE_TYPE = {"Open","In-Progress","Resolved","Archived","Aborted","Re-open"};
     private ProgressDialog progressDialog;
     private List<Case> caseList = new ArrayList<>();
