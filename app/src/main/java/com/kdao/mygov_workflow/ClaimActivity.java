@@ -144,14 +144,6 @@ public class ClaimActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener);
-        }
-        catch (SecurityException e){
-            e.printStackTrace();
-        }
-
         // TODO: Modify if NumOfImages != 4
         viewImage = new ImageView[NumOfImages];
         viewImage[0] = (ImageView) findViewById(R.id.image1);
@@ -257,6 +249,14 @@ public class ClaimActivity extends AppCompatActivity {
                     workflowTypeSelect = (int)workflowType.getSelectedItemId();
                     critical = (int)criticalLevel.getSelectedItemId();
                     note = descriptionText.getText().toString();
+
+                    try {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
+                                MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener);
+                    }
+                    catch (SecurityException e){
+                        e.printStackTrace();
+                    }
 
                     Toast.makeText(ClaimActivity.this,
                             "long:"+String.valueOf(longitude)+" lat:"+String.valueOf(latitude),
