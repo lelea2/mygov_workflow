@@ -3,4 +3,12 @@
     <string name="title_activity_main">Home</string>
     <string name="title_activity_splash">Splash Page</string>
     <string name="title_activity_message_view">MessageViewActivity</string>
+    <string-array name="criticalLevels">
+        <item>Please select</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

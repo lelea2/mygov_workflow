@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,15 +19,15 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -40,6 +43,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -47,6 +51,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -59,7 +64,21 @@ public class ClaimActivity extends AppCompatActivity {
     static int CHOOSE_PHOTO = 2;
     static int CURRENT_INDEX = 0;
     static int NumOfSubmittedImages = 0;
+    static int workflowTypeSelect = 0;
+    static int critical = 0;
+    static String note = "";
     final private static Integer NumOfImages = 4;
+
+    private LocationManager locationManager;
+    Location location; // Location
+    double latitude = 0.0; // Latitude
+    double longitude = 0.0; // Longitude
+
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
     Button btnAttachImage;
     Button btnSubmitClaim;
@@ -67,12 +86,36 @@ public class ClaimActivity extends AppCompatActivity {
     Button btnResetClaim;
 
     Spinner workflowType;
-    EditText subjectText;
+    Spinner criticalLevel;
     EditText descriptionText;
     String[] workflowTypeList;
+    String[] workflowTypeIDs;
     String[] imageAddress;
     boolean[] imageExist;
     ImageView[] viewImage;
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle){
+
+        }
+    };
 
     private TransferUtility transferUtility;
 
@@ -93,15 +136,21 @@ public class ClaimActivity extends AppCompatActivity {
         btnAttachImage = (Button)findViewById(R.id.btnAttachImages);
         btnRemoveLastImage = (Button)findViewById(R.id.btnRemovePreviousImage);
         workflowType = (Spinner)findViewById(R.id.WorkflowTypeList);
-        subjectText = (EditText)findViewById(R.id.Subject_text);
+        criticalLevel = (Spinner)findViewById(R.id.CriticalLevels);
         descriptionText = (EditText)findViewById(R.id.Description_text);
 
         imageAddress = new String[NumOfImages];
         imageExist = new boolean[NumOfImages];
 
-        // Initialize claim type list for calling GET API
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener);
+        }
+        catch (SecurityException e){
+            e.printStackTrace();
+        }
 
         // TODO: Modify if NumOfImages != 4
         viewImage = new ImageView[NumOfImages];
@@ -192,9 +241,9 @@ public class ClaimActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                         return;
                     }
-                    if (subjectText.getText().length() == 0) {
+                    if (criticalLevel.getSelectedItemId() == 0) {
                         Toast.makeText(ClaimActivity.this,
-                                "Please enter the subject!",
+                                "Please select the critical level!",
                                 Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -205,24 +254,24 @@ public class ClaimActivity extends AppCompatActivity {
                         return;
                     }
 
-                    String workflowTypeSelect = workflowType.getSelectedItem().toString();
-                    String subject = subjectText.getText().toString();
-                    String description = descriptionText.getText().toString();
+                    workflowTypeSelect = (int)workflowType.getSelectedItemId();
+                    critical = (int)criticalLevel.getSelectedItemId();
+                    note = descriptionText.getText().toString();
 
                     Toast.makeText(ClaimActivity.this,
-                            workflowTypeSelect + "/" + subject + "/" + description,
-                                Toast.LENGTH_LONG).show();
-
+                            "long:"+String.valueOf(longitude)+" lat:"+String.valueOf(latitude),
+                            Toast.LENGTH_LONG).show();
 
                     for (int i = 0; i < NumOfImages; i++) {
                         if (imageExist[i]) {
                             File file = new File(imageAddress[i]);
+                            // The file's link = Constants.URL_S3Bucket + imageAddress[i]
                             TransferObserver observer = transferUtility.upload(Constants.BUCKET_NAME, file.getName(),
                                     file);
                             observer.setTransferListener(new UploadListener());
                         }
                     }
-
+                    postClaim();
                     refresh();
                 } catch (Exception e) {
                     Toast.makeText(ClaimActivity.this,
@@ -237,10 +286,10 @@ public class ClaimActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        subjectText.setText("");
         descriptionText.setText("");
         getAllWorkflowConfigures();
         workflowType.setSelection(0);
+        criticalLevel.setSelection(0);
         resetImages();
     }
 
@@ -255,8 +304,9 @@ public class ClaimActivity extends AppCompatActivity {
         NumOfSubmittedImages = 0;
     }
 
+
     private void getAllWorkflowConfigures() {
-        class CaseAsyncTask extends AsyncTask<String, Void, String> {
+        class GetWorkflowTypesAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -299,24 +349,24 @@ public class ClaimActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "No workflow types available", Toast.LENGTH_LONG).show();
                     } else {
                         workflowTypeList = new String[jsonArray.size()+1];
+                        workflowTypeIDs = new String[workflowTypeList.length];
                         workflowTypeList[0] = workflowTypeDefault;
+                        workflowTypeIDs[0] = "";
                         for (int i = 0; i < jsonArray.size(); i++) {
                             JSONObject object = (JSONObject) jsonArray.get(i);
                             if(object != null) {
                                 workflowTypeList[i+1] = object.get("name").toString();
+                                workflowTypeIDs[i+1] = object.get("id").toString();
                             }
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,workflowTypeList);
                         workflowType.setAdapter(adapter);
                         OnItemSelectedListener OnCatSpinnerCL = new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
                                 ((TextView) parent.getChildAt(0)).setTextColor(0xFF000000);
-
                             }
 
                             public void onNothingSelected(AdapterView<?> parent) {
-
                             }
                         };
                         workflowType.setOnItemSelectedListener(OnCatSpinnerCL);
@@ -326,10 +376,61 @@ public class ClaimActivity extends AppCompatActivity {
                 }
             }
         }
-        CaseAsyncTask caseAsyncTask = new CaseAsyncTask();
-        caseAsyncTask.execute();
+        GetWorkflowTypesAsyncTask getWorkflowTypesAsyncTask = new GetWorkflowTypesAsyncTask();
+        getWorkflowTypesAsyncTask.execute();
     }
 
+    private void postClaim() {
+        class PostClaimAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                URL url = null;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(new String(Constants.URL_API+"workflows"));
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("type_id", workflowTypeIDs[workflowTypeSelect]);
+                    urlConnection.setRequestProperty("critical", String.valueOf(critical));
+                    urlConnection.setRequestProperty("note", note);
+                    urlConnection.setRequestProperty("longitude", String.valueOf(longitude));
+                    urlConnection.setRequestProperty("latitude", String.valueOf(latitude));
+                    urlConnection.setDoOutput(true);
+
+                    OutputStream oStream = urlConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(oStream));
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    oStream.close();
+
+                    int responseCode = urlConnection.getResponseCode();
+                    return String.valueOf(responseCode);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    urlConnection.disconnect();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                Toast.makeText(getApplicationContext(), "Response from server: " + result, Toast.LENGTH_LONG).show();
+            }
+        }
+        PostClaimAsyncTask postClaimAsyncTask = new PostClaimAsyncTask();
+        postClaimAsyncTask.execute();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -411,12 +512,10 @@ public class ClaimActivity extends AppCompatActivity {
     private class UploadListener implements TransferListener {
         @Override
         public void onError(int id, Exception e) {
-
         }
 
         @Override
         public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-
         }
 
         @Override
@@ -453,6 +552,5 @@ public class ClaimActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
