@@ -3,6 +3,8 @@
     <string name="title_activity_main">Home</string>
     <string name="title_activity_splash">Splash Page</string>
     <string name="title_activity_message_view">MessageViewActivity</string>
+    <string name="login_title">LOG IN TO YOUR ACCOUNT</string>
+    <string name="login_btn">Log In</string>
     <string-array name="criticalLevels">
         <item>Please select</item>
         <item>1</item>
