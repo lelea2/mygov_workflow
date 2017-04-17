@@ -9,23 +9,16 @@
     android:background="#E1E6E9">
 
 
-    <ScrollView
+    <ListView
+        android:id="@+id/trackingList"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="70dp"
+        android:padding="10dp"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-        <ListView
-            android:id="@+id/trackingList"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"/> 
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"/> 
 
     <!-- Include bottom bar -->
     <com.roughike.bottombar.BottomBar
@@ -35,4 +28,5 @@
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottom_nav"
         android:background="#192630" />
+
 </RelativeLayout>
