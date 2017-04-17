@@ -26,13 +26,13 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:text="Title"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/title"
-                    android:textStyle="normal|bold"
+                    android:text="Title"
                     android:textAlignment="viewStart"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="normal|bold" />
 
                 <TextView
                     android:text="Located on 154 acres in downtown San Jose, the university offers the excitement of studying at a large, metropolitan campus where many cultures meet.  sjsu campus Yet students find personal attention from faculty members in the smaller settings of the university's eight colleges.  San Jose is a newly revitalized city which hosts major sports, the arts, museums and restaurants serving a wide variety of cuisines. The Santa Cruz coastline is less than an hour away and San Francisco is one hour to the north."

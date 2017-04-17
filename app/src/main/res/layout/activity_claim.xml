@@ -22,18 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:paddingLeft="16dp"
             android:inputType="textPersonName"
-            android:text="Claim Type" />
+            android:text="Claim Type"
+            />
 
         <Spinner
             android:id="@+id/WorkflowTypeList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignStart="@+id/WorkflowType"
             android:layout_below="@+id/WorkflowType"
-            android:background="#11FFFF"
-            android:paddingLeft="16dp" />
+            android:background="@drawable/bg_edittext_focused"
+            />
 
         <TextView
             android:id="@+id/Critical"
@@ -41,19 +41,21 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:paddingLeft="16dp"
-            android:paddingTop="10dp"
-            android:text="Critical Level" />
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Critical Level"
+            />
 
         <Spinner
             android:id="@+id/CriticalLevels"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignStart="@+id/Critical"
             android:layout_below="@+id/Critical"
-            android:background="#11FFFF"
-            android:paddingLeft="16dp"
-            android:entries="@array/criticalLevels"/>
+            android:background="@drawable/bg_edittext_focused"
+            android:paddingLeft="5dp"
+            android:entries="@array/criticalLevels"
+            />
 
         <TextView
             android:id="@+id/Note"
@@ -61,8 +63,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:paddingLeft="16dp"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="Note" />
 
         <EditText
@@ -75,7 +77,7 @@
             android:paddingLeft="16dp"
             android:paddingTop="10dp"
             android:layout_below="@+id/Note"
-            android:background="#11FFFF"
+            android:background="@drawable/bg_edittext_focused"
             android:layout_alignStart="@+id/Note" />
 
         <TextView
@@ -84,43 +86,46 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
+            android:paddingTop="5dp"
             android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
 
             <Button
                 android:id="@+id/btnAttachImages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
                 android:layout_marginRight="16dp"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:background="@android:color/holo_blue_light"
                 android:inputType="textPersonName"
-                android:padding="16dp"
-                android:text="Attach images" />
+                android:text="Attach images"
+                />
 
             <Button
                 android:id="@+id/btnSubmitClaim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="16dp"
-                android:layout_weight="0.5"
                 android:background="@android:color/holo_green_dark"
                 android:inputType="textPersonName"
-                android:padding="16dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
                 android:text="Submit claim " />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_alignParentStart="true"
             android:orientation="horizontal">
 
@@ -144,7 +149,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_alignParentStart="true"
             android:orientation="horizontal">
 
@@ -170,30 +175,32 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_alignParentStart="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
 
             <Button
                 android:id="@+id/btnRemovePreviousImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
                 android:layout_marginRight="16dp"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:background="@android:color/holo_orange_light"
                 android:inputType="textPersonName"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
                 android:text="Remove last image" />
 
             <Button
                 android:id="@+id/btnResetClaim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
                 android:layout_marginLeft="16dp"
-                android:layout_weight="0.5"
-                android:background="@android:color/holo_red_dark"
+                android:layout_weight="1"
+                android:background="#F14F4D"
                 android:inputType="textPersonName"
-                android:padding="16dp"
-                android:text="      Reset      " />
+                android:text="Reset" />
         </LinearLayout>
     </LinearLayout>
 

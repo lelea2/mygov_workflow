@@ -14,12 +14,12 @@
         android:fillViewport="true">
         <ListView
             android:id="@+id/trackingList"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:layout_width="350dp"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
-            android:dividerHeight="30dp"/> 
+            android:dividerHeight="10dp"/> 
     </ScrollView>
 
     <!-- Include bottom bar -->
