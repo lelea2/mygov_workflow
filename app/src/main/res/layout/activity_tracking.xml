@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.kdao.mygov_workflow.TrackingActivity"
     android:background="#E1E6E9">
 
@@ -17,8 +18,10 @@
         <ListView
             android:id="@+id/trackingList"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_gravity="center"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
             android:dividerHeight="10dp"/> 
