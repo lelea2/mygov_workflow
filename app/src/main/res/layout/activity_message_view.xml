@@ -52,7 +52,8 @@
                 android:background="#0199E1"
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <Button
                 android:text="Back"
@@ -64,7 +65,8 @@
                 android:background="#F14F4D"
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
 
