@@ -9,4 +9,5 @@ public class Config {
     public static final String VALID_EMAIL = "Please enter valid email";
     public static final String VALID_PWD = "Please enter matching confirmed password";
     public static final String LOGIN_ERR = "Invalid email or password. Please try again!";
+    public static final String AUTHENTICATE = "Authenticating...";
 }

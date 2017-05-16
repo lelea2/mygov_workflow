@@ -318,7 +318,7 @@ public class ClaimActivity extends AppCompatActivity {
                 URL url = null;
                 HttpURLConnection urlConnection = null;
                 try {
-                    url = new URL(new String(Constants.URL_API+"workflow_configure"));
+                    url = new URL(new String(Constants.URL_API + "workflow_configure"));
                     urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                     InputStreamReader streamReader = new InputStreamReader(in);
