@@ -36,6 +36,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -44,6 +45,7 @@ import org.json.simple.parser.ParseException;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -396,20 +398,30 @@ public class ClaimActivity extends AppCompatActivity {
                     url = new URL(new String(Constants.URL_API+"workflows"));
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("type_id", workflowTypeIDs[workflowTypeSelect]);
-                    urlConnection.setRequestProperty("critical", String.valueOf(critical));
-                    urlConnection.setRequestProperty("note", note);
-                    urlConnection.setRequestProperty("longitude", String.valueOf(longitude));
-                    urlConnection.setRequestProperty("latitude", String.valueOf(latitude));
                     urlConnection.setDoOutput(true);
-
+                    //Send request body
+                    DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream ());
+                    try {
+                        org.json.JSONObject jsonParam = new org.json.JSONObject();
+                        jsonParam.put("type_id",  workflowTypeIDs[workflowTypeSelect]);
+                        jsonParam.put("critical", critical);
+                        jsonParam.put("note", note);
+                        jsonParam.put("longitude", longitude);
+                        jsonParam.put("latitude", latitude);
+                        wr.writeBytes(jsonParam.toString());
+                        wr.flush();
+                        wr.close();
+                    } catch(JSONException e) {
+                        e.printStackTrace();
+                    }
                     OutputStream oStream = urlConnection.getOutputStream();
                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(oStream));
                     bufferedWriter.flush();
                     bufferedWriter.close();
                     oStream.close();
-
                     int responseCode = urlConnection.getResponseCode();
+                    System.out.println(urlConnection.getResponseMessage());
+                    System.out.println(responseCode);
                     return String.valueOf(responseCode);
 
                 } catch (MalformedURLException e) {

@@ -85,7 +85,8 @@ public class SigninActivity extends AppCompatActivity {
                     urlConnection.setDoOutput(true);
                     urlConnection.setDoInput(true);
                     urlConnection.setUseCaches (false);
-                    urlConnection.setRequestProperty("account_type", "resident");
+                    urlConnection.addRequestProperty("account_type", "resident");
+                    System.out.println(">>>> Request header <<<<");
                     System.out.println(urlConnection.getHeaderField("account_type"));
                     //Send request body
                     DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream ());
